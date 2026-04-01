@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Technikum Shoes Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a href="{{ url_for('catalog.catalog') }}" class="logo">Technikum Shoes</a>
+        <nav class="top-nav">
+          <a href="{{ url_for('checkout.cart') }}" class="cart-link">
+            Корзина
+            <span class="cart-count" data-cart-count>0</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="flash-list">
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    {% block scripts %}
+      <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+    {% endblock %}
+  </body>
+  </html>

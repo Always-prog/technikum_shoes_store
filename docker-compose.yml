@@ -1,0 +1,49 @@
+services:
+  web:
+    build: .
+    container_name: shoes_web
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    command: sh -c "python3 bootstrap.py && gunicorn --bind 0.0.0.0:5000 run:app"
+    depends_on:
+      db:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
+  db:
+    image: postgres:16
+    container_name: shoes_db
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: shoes_minio
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  postgres_data:
+  minio_data:

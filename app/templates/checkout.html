@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+  <section class="page-header">
+    <h1>Оформление заказа</h1>
+    <p>Проверь состав корзины и заполни данные.</p>
+  </section>
+
+  <section class="checkout-layout" data-checkout-page>
+    <div class="checkout-items" data-checkout-items></div>
+
+    <form class="checkout-form" method="post" action="{{ url_for('checkout.checkout_submit') }}" data-checkout-form>
+      <input type="hidden" name="cart_payload" data-cart-payload>
+
+      <label>
+        Имя
+        <input type="text" name="customer_name" required>
+      </label>
+      <label>
+        Телефон
+        <input type="text" name="phone" required>
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" required>
+      </label>
+      <label>
+        Адрес доставки
+        <input type="text" name="delivery_address" required>
+      </label>
+      <label>
+        Комментарий
+        <textarea name="comment" rows="3"></textarea>
+      </label>
+
+      <h2>Оплата картой (учебный mock)</h2>
+      <label>
+        Номер карты
+        <input type="text" name="card_number_ui" placeholder="0000 0000 0000 0000" required>
+      </label>
+      <label>
+        Срок действия
+        <input type="text" name="card_exp_ui" placeholder="MM/YY" required>
+      </label>
+      <label>
+        Имя держателя
+        <input type="text" name="card_holder_ui" required>
+      </label>
+      <label>
+        CVV
+        <input type="password" name="card_cvv_ui" required>
+      </label>
+
+      <button type="submit">Купить</button>
+    </form>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Каталог обуви{% endblock %}
+
+{% block content %}
+  <section class="page-header">
+    <h1>Каталог обуви</h1>
+  </section>
+
+  <form class="filters-form" method="get" action="{{ url_for('catalog.catalog') }}">
+    <select name="category">
+      <option value="">Все категории</option>
+      {% for category in categories %}
+        <option value="{{ category.slug }}" {% if selected_filters.category == category.slug %}selected{% endif %}>
+          {{ category.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <select name="brand">
+      <option value="">Все бренды</option>
+      {% for value in brands %}
+        <option value="{{ value }}" {% if selected_filters.brand == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="gender">
+      <option value="">Любой пол</option>
+      {% for value in genders %}
+        <option value="{{ value }}" {% if selected_filters.gender == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="season">
+      <option value="">Любой сезон</option>
+      {% for value in seasons %}
+        <option value="{{ value }}" {% if selected_filters.season == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" name="min_price" min="0" step="1" placeholder="Цена от" value="{{ selected_filters.min_price }}">
+    <input type="number" name="max_price" min="0" step="1" placeholder="Цена до" value="{{ selected_filters.max_price }}">
+    <button type="submit">Применить</button>
+    <a href="{{ url_for('catalog.catalog') }}" class="reset-link">Сбросить</a>
+  </form>
+
+  <section class="products-grid">
+    {% for product in products %}
+      <article class="product-card">
+        <a href="{{ url_for('catalog.product_detail', slug=product.slug) }}" class="product-link">
+          {% if product.main_image_url %}
+            <img src="{{ product.main_image_url }}" alt="{{ product.name }}" class="product-image">
+          {% else %}
+            <div class="image-placeholder">Нет изображения</div>
+          {% endif %}
+          <h2>{{ product.name }}</h2>
+          <p class="product-meta">{{ product.brand }} | {{ product.category.name }}</p>
+          <p class="price">{{ "%.2f"|format(product.price) }} ₽</p>
+        </a>
+      </article>
+    {% else %}
+      <p class="empty-result">По выбранным фильтрам ничего не найдено.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

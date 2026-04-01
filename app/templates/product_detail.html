@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+  <article class="product-detail">
+    <a href="{{ url_for('catalog.catalog') }}" class="back-link">← Назад в каталог</a>
+    <h1>{{ product.name }}</h1>
+    <p class="product-meta">{{ product.brand }} | {{ product.category.name }}</p>
+    <p class="price">{{ "%.2f"|format(product.price) }} ₽</p>
+    <button
+      type="button"
+      class="add-to-cart-btn"
+      data-add-to-cart
+      data-product-id="{{ product.id }}"
+      data-product-slug="{{ product.slug }}"
+      data-product-name="{{ product.name }}"
+      data-product-price="{{ product.price }}"
+      data-product-image="{{ product.main_image_url or '' }}"
+    >
+      Добавить в корзину
+    </button>
+    <p>{{ product.description }}</p>
+
+    <section class="gallery">
+      {% if product.images %}
+        {% for image in product.images|sort(attribute='sort_order') %}
+          <img src="{{ image.image_url }}" alt="{{ image.alt_text or product.name }}" class="detail-image">
+        {% endfor %}
+      {% else %}
+        <div class="image-placeholder detail-placeholder">Изображения еще не загружены</div>
+      {% endif %}
+    </section>
+  </article>
+{% endblock %}
