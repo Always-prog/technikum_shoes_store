@@ -82,8 +82,8 @@ class Order(db.Model):
     delivery_address = db.Column(db.String(255), nullable=False)
     comment = db.Column(db.Text, nullable=True)
 
-    payment_method = db.Column(db.String(50), nullable=False, default="card")
-    payment_status = db.Column(db.String(50), nullable=False, default="paid_mock")
+    payment_method = db.Column(db.String(50), nullable=False, default="prikolkcoin")
+    payment_status = db.Column(db.String(50), nullable=False, default="paid_prikolkcoin")
     order_status = db.Column(db.String(50), nullable=False, default="placed")
     total_amount = db.Column(Numeric(10, 2), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())

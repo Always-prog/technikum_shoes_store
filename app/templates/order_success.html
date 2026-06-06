@@ -6,8 +6,8 @@
   <section class="page-header order-success" data-order-success>
     <h1>Заказ оформлен</h1>
     <p>Спасибо за покупку! Номер заказа: <strong>#{{ order.id }}</strong></p>
-    <p>Статус: {{ order.order_status }}, оплата: {{ order.payment_status }}</p>
-    <p>Сумма: <strong>{{ "%.2f"|format(order.total_amount) }} ₽</strong></p>
+    <p>Оплата: <strong>приколкоинами</strong> (успешно)</p>
+    <p>Списано: <strong>{{ "%.0f"|format(order.total_amount) }} приколкоинов</strong></p>
     <a href="{{ url_for('catalog.catalog') }}">Вернуться в каталог</a>
   </section>
 {% endblock %}

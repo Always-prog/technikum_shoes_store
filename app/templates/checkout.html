@@ -35,25 +35,15 @@
         <textarea name="comment" rows="3"></textarea>
       </label>
 
-      <h2>Оплата картой (учебный mock)</h2>
-      <label>
-        Номер карты
-        <input type="text" name="card_number_ui" placeholder="0000 0000 0000 0000" required>
-      </label>
-      <label>
-        Срок действия
-        <input type="text" name="card_exp_ui" placeholder="MM/YY" required>
-      </label>
-      <label>
-        Имя держателя
-        <input type="text" name="card_holder_ui" required>
-      </label>
-      <label>
-        CVV
-        <input type="password" name="card_cvv_ui" required>
-      </label>
+      <section class="prikolk-payment">
+        <h2>Оплата приколкоинами</h2>
+        <p class="prikolk-note">
+          Откуда у тебя приколкоины — неважно. Система не проверяет баланс, кошелёк и происхождение монет.
+        </p>
+        <p class="prikolk-total" data-prikolk-total>К оплате: 0 приколкоинов</p>
+      </section>
 
-      <button type="submit">Купить</button>
+      <button type="submit">Купить за приколкоины</button>
     </form>
   </section>
 {% endblock %}

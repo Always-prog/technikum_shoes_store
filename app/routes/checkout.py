@@ -66,8 +66,8 @@ def checkout_submit():
         email=email,
         delivery_address=delivery_address,
         comment=comment or None,
-        payment_method="card",
-        payment_status="paid_mock",
+        payment_method="prikolkcoin",
+        payment_status="paid_prikolkcoin",
         order_status="placed",
         total_amount=Decimal("0"),
     )

@@ -5,6 +5,7 @@
   const itemsContainer = page.querySelector("[data-checkout-items]");
   const form = page.querySelector("[data-checkout-form]");
   const payloadInput = page.querySelector("[data-cart-payload]");
+  const prikolkTotalEl = page.querySelector("[data-prikolk-total]");
   const cart = window.CartStore.loadCart();
 
   if (cart.length === 0) {
@@ -23,8 +24,11 @@
     itemsContainer.innerHTML = `
       <h2>Состав заказа</h2>
       <ul class="checkout-list">${rows}</ul>
-      <p class="checkout-total">Итого: <strong>${total.toFixed(2)} ₽</strong></p>
+      <p class="checkout-total">Итого: <strong>${total.toFixed(2)} ₽</strong> (${Math.round(total)} приколкоинов)</p>
     `;
+    if (prikolkTotalEl) {
+      prikolkTotalEl.textContent = `К оплате: ${Math.round(total)} приколкоинов`;
+    }
   }
 
   payloadInput.value = JSON.stringify(
